@@ -1,6 +1,6 @@
 /**************************************************************************
  *
- * Copyright (c) 2021 Stefan Möding <stm@kill-9.net>
+ * Copyright (c) 2021, 2022 Stefan Möding <stm@kill-9.net>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -110,6 +110,7 @@ int main(int argc, char *argv[]) {
   char    *buffer = NULL;
   size_t   bsize  = 0;
   int      index  = 0;
+  int      warned = 0;
   ssize_t  chars;
   int      opt;
 
@@ -144,8 +145,6 @@ int main(int argc, char *argv[]) {
    * read file names from stdin
    */
   while ((chars = getdelim(&buffer, &bsize, delimiter, stdin)) != -1) {
-    int warned = 0;
-
     if (chars > 0) {
       buffer[chars-1] = '\000';  // buffer must be NULL terminated
 
