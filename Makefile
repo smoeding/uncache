@@ -1,22 +1,22 @@
 # Makefile for uncache
 
-VERSION	=1.0.1
+VERSION	 := 1.0.1
 
-CFLAGS	= -Wall -DUNCACHE_VERSION=\"$(VERSION)\"
+# Compile flags
+CPPFLAGS := -DUNCACHE_VERSION=\"$(VERSION)\"
+CFLAGS   := -Wall
 
-all:	uncache
+all: uncache
 
-uncache: uncache.o
-
-install:	uncache
+install: uncache
 	install -s -D uncache $(DESTDIR)/usr/bin/uncache
 	install -D uncache.8 $(DESTDIR)/usr/man/man8/uncache.8
 	gzip -9 $(DESTDIR)/usr/man/man8/uncache.8
 
 clean:
-	$(RM) uncache.o
+# Nothing to do
 
-realclean:	clean
+realclean: clean
 	$(RM) uncache
 
 dist:
