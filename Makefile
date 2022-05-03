@@ -4,7 +4,7 @@ VERSION	 := 1.0.2
 
 # Compile flags
 CPPFLAGS := -DUNCACHE_VERSION=\"$(VERSION)\"
-CFLAGS   := -Wall
+CFLAGS   := -Wall -Wextra -Wformat
 
 .PHONY: all
 all: uncache
