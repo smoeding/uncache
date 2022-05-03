@@ -90,7 +90,7 @@ void uncache(char *file) {
         int cached = fincore(fd, info.st_size);
 
         if (cached > 0) {
-          if (verbose == 0) printf("%s: %d pages\n", file, cached);
+          if (verbose == 1) printf("%s: %d pages\n", file, cached);
 
           if (dry_run == 0) {
             // write dirty data blocks to stable storage
