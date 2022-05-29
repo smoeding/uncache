@@ -1,22 +1,22 @@
-# Makefile.  Generated from Makefile.in by configure.
+# @configure_input@
 
-package = uncache
-version = 1.1.0
-tarname = uncache
+package = @PACKAGE_NAME@
+version = @PACKAGE_VERSION@
+tarname = @PACKAGE_TARNAME@
 distdir = $(tarname)-$(version)
 
-prefix      = /usr/local
-exec_prefix = ${prefix}
-bindir      = ${exec_prefix}/bin
+prefix      = @prefix@
+exec_prefix = @exec_prefix@
+bindir      = @bindir@
 
 # Tool-specific substitution variables
-CC		= gcc
-CFLAGS		= -g -O2 -Wall -Wextra -Wformat
-CPPFLAGS	= 
-INSTALL		= /usr/bin/install -c
-INSTALL_DATA	= ${INSTALL} -m 644
-INSTALL_PROGRAM = ${INSTALL}
-INSTALL_SCRIPT	= ${INSTALL}
+CC		= @CC@
+CFLAGS		= @CFLAGS@ -Wall -Wextra -Wformat
+CPPFLAGS	= @CPPFLAGS@
+INSTALL		= @INSTALL@
+INSTALL_DATA	= @INSTALL_DATA@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_SCRIPT	= @INSTALL_SCRIPT@
 
 all: uncache
 

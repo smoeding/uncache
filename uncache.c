@@ -30,13 +30,27 @@
  **************************************************************************/
 
 
+#include "config.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
+#ifdef STDC_HEADERS
+# include <stdlib.h>
+# include <stddef.h>
+#else
+# ifdef HAVE_STDLIB_H
+#  include <stdlib.h>
+# endif
+#endif
+#if HAVE_FCNTL_H
+# include <fcntl.h>
+#endif
 #include <getopt.h>
-#include <unistd.h>
+#if HAVE_UNISTD_H
+# include <unistd.h>
+#endif
 #include <sys/mman.h>
-#include <sys/stat.h>
+#if HAVE_SYS_STAT_H
+# include <sys/stat.h>
+#endif
 
 
 static int dry_run = 0;
@@ -137,7 +151,7 @@ int main(int argc, char *argv[]) {
   }
 
   if (version == 1) {
-    printf("uncache %s\n", UNCACHE_VERSION);
+    printf("uncache %s\n", PACKAGE_VERSION);
     exit(0);
   }
 
