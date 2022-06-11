@@ -9,5 +9,6 @@
 /config.status
 /configure.scan
 /stamp-h?
+Makefile
 config.log
 uncache
