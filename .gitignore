@@ -5,6 +5,7 @@
 /aclocal.m4
 /autom4te.cache/
 /autoscan.log
+/config.cache
 /config.h
 /config.status
 /configure.scan
