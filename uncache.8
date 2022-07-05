@@ -22,7 +22,7 @@ The
 program only drops cached blocks for the named files.
 This is in contrast to the
 .IR /proc/sys/vm/drop_caches
-sysctl which will drop the cached blocks for all files.
+sysctl which will drop cached blocks for all files.
 .SH OPTIONS
 .TP
 .B \-0, \-\-null
@@ -34,8 +34,8 @@ The GNU find \-print0 option produces input suitable for this mode.
 .TP
 .B \-n, \-\-dry-run
 Do not actually do anything.
-Can be used together with the verbose option to check which files are
-currently in the pagecache.
+Can be used together with the verbose option to check which files and
+how many blocks are currently in the pagecache.
 .TP
 .B \-v, \-\-verbose
 Verbose mode.
@@ -54,19 +54,19 @@ the pagecache.
 .SH EXAMPLES
 .TP
 find /var/lib/mysql -type f | uncache --dry-run --verbose
-Show which MySQL data files are currently in the pagecache but do not
+show which MySQL data files are currently in the pagecache but do not
 purge the cached blocks.
 .TP
 find /var/log -type f | uncache
-Remove cached blocks for all files below the /var/log directory from
+remove cached blocks for all files below the /var/log directory from
 the pagecache.
 .TP
 find /var/log -type f -print0 | uncache -0
-The same as before but use zero terminated strings to handle unusual
+the same as before but use zero terminated strings to handle unusual
 file names.
 .SH AUTHOR
 .MT stm@kill-9.net
-Stefan Moeding
+Stefan Möding
 .ME
 .SH SEE ALSO
 .BR posix_fadvise (2)
