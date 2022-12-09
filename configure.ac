@@ -23,7 +23,8 @@ AC_TYPE_SSIZE_T
 
 # Checks for library functions.
 AC_FUNC_MMAP
-AC_CHECK_FUNCS([fdatasync getdelim getpagesize munmap])
+AC_CHECK_FUNCS([fdatasync getdelim getpagesize munmap posix_fadvise],[],
+  [AC_MSG_ERROR([missing library function])])
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
