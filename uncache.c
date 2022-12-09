@@ -53,6 +53,9 @@
 #endif
 
 
+/***********************************************************************
+ * Options
+ */
 static int dry_run = 0;
 static int verbose = 0;
 static int version = 0;
@@ -66,9 +69,14 @@ static struct option long_options[] = {
 };
 
 
-//
-// Count the number of cached blocks for a file
-//
+/***********************************************************************
+ * Count the number of cached blocks for a file
+ *
+ * fd   : file descriptor for the file
+ * size : size of the file in bytes
+ *
+ * returns the number of cached blocks
+ */
 int fincore(int fd, off_t size) {
   size_t         page_size = getpagesize();
   int            cached    = 0;
@@ -90,9 +98,12 @@ int fincore(int fd, off_t size) {
   return cached;
 }
 
-//
-// uncache a file
-//
+
+/***********************************************************************
+ * uncache a file
+ *
+ * file : the absolute path name of the file
+ */
 void uncache(char *file) {
   int fd = open(file, O_RDONLY);
 
@@ -100,17 +111,18 @@ void uncache(char *file) {
     struct stat info;
 
     if (fstat(fd, &info) == 0) {
-      if (S_ISREG(info.st_mode) > 0) {  /* regular file? */
+      /* check if it is a regular file */
+      if (S_ISREG(info.st_mode) > 0) {
         int cached = fincore(fd, info.st_size);
 
         if (cached > 0) {
           if (verbose == 1) printf("%s: %d pages\n", file, cached);
 
           if (dry_run == 0) {
-            // write dirty data blocks to stable storage
+            /* write dirty data blocks to stable storage */
             fdatasync(fd);
 
-            // advise kernel that we don't need the blocks
+            /* advise kernel that we don't need the blocks */
             posix_fadvise(fd, 0, info.st_size, POSIX_FADV_DONTNEED);
           }
         }
@@ -120,6 +132,9 @@ void uncache(char *file) {
   }
 }
 
+/***********************************************************************
+ * main
+ */
 int main(int argc, char *argv[]) {
   char    *buffer = NULL;
   size_t   bsize  = 0;
@@ -134,7 +149,7 @@ int main(int argc, char *argv[]) {
   while ((opt = getopt_long(argc, argv, "0nv", long_options, &index)) != -1) {
     switch(opt) {
     case 0:
-      // long option: nothing to do as getopt_long() sets the flag internally
+      /* long option: nothing to do as getopt_long() sets the flag */
      break;
     case '0':
       delimiter = '\0';
@@ -160,7 +175,8 @@ int main(int argc, char *argv[]) {
    */
   while ((chars = getdelim(&buffer, &bsize, delimiter, stdin)) != -1) {
     if (chars > 0) {
-      buffer[chars-1] = '\000';  // buffer must be NULL terminated
+      /* buffer must be NULL terminated */
+      buffer[chars-1] = '\000';
 
       if (buffer[0] == '/') {
         uncache(buffer);
